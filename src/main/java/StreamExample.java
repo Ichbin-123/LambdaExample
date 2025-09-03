@@ -27,9 +27,9 @@ public class StreamExample {
 
         // Metodo classico
         List<String> nomiPersone = new ArrayList<>();
-        for (Persona p : persone){
-            if(p.getEra() > 30 && p.getNazione().equals("Italia"))
-                    nomiPersone.add(p.getNome());
+        for (Persona p : persone) {
+            if (p.getEta() > 30 && p.getNazione().equals("Italia"))
+                nomiPersone.add(p.getNome());
         }
 
         Collections.sort(nomiPersone);
@@ -40,9 +40,9 @@ public class StreamExample {
         // metodo Stream API
         List<String> nomiPersoneStream = persone.stream() // Ritorna uno stream di Persone
                 .filter(p -> p.getNazione().equals("Italia"))
-                .filter(p -> p.getEra() > 30)
+                .filter(p -> p.getEta() > 30)
                 .map(p -> p.getNome())
-                .sorted((a,b) -> a.compareTo(b))
+                .sorted((a, b) -> a.compareTo(b))
                 .toList();
 
         System.out.println("Metodo Stream API");
@@ -53,38 +53,37 @@ public class StreamExample {
 
         persone.stream()
                 .filter(p -> p.getNazione().equals("Germania"))
-                .forEach(p-> System.out.print(p.getNome() + " "));
+                .forEach(p -> System.out.print(p.getNome() + " "));
 
         // Es: troviamo il nome della prima persona italiana
         persone.stream()
-                .filter(p->p.getNazione().equals("Italia"))
+                .filter(p -> p.getNazione().equals("Italia"))
                 .findFirst()
                 .ifPresent(p -> System.out.println("prima persona italiana: " + p));
 
         // Es: calcolare il totale delle età delle persone
         int totaleEta = persone.stream()
-                .map(p -> p.getEra())
+                .map(p -> p.getEta())
                 .reduce(0, (sommaParziale, eta) -> sommaParziale + eta);
         System.out.println("Somma delle età: " + totaleEta);
 
         // Es: calcola la media della eta
-        int media = (Collections.max(persone).getEra() + Collections.min(persone).getEra()) / 2;
+        int media = (Collections.max(persone).getEta() + Collections.min(persone).getEta()) / 2;
         System.out.println(media);
 
         System.out.println(media * persone.size());
     }
-
-
+}
 
 
 class Persona implements Comparable{ //POJO = Plain Old Java Object
     private String nome;
-    private int era;
+    private int eta;
     private String nazione;
 
-    public Persona(String nome, int era, String nazione) {
+    public Persona(String nome, int eta, String nazione) {
         this.nome = nome;
-        this.era = era;
+        this.eta = eta;
         this.nazione = nazione;
     }
 
@@ -92,8 +91,8 @@ class Persona implements Comparable{ //POJO = Plain Old Java Object
         return nome;
     }
 
-    public int getEra() {
-        return era;
+    public int getEta() {
+        return eta;
     }
 
     public String getNazione() {
@@ -104,7 +103,7 @@ class Persona implements Comparable{ //POJO = Plain Old Java Object
     public String toString() {
         return "\nPersona{" +
                 "nome='" + nome + '\'' +
-                ", era=" + era +
+                ", eta=" + eta +
                 ", nazione='" + nazione + '\'' +
                 '}';
     }
@@ -112,7 +111,7 @@ class Persona implements Comparable{ //POJO = Plain Old Java Object
     @Override
     public int compareTo(Object o) {
         Persona p = (Persona) o;
-        if (this.era > p.getEra()) return 1;
-        else if (this.era < p.getEra()) return -1; return 0;
+        if (this.eta > p.getEta()) return 1;
+        else if (this.eta < p.getEta()) return -1; return 0;
     }
 }
