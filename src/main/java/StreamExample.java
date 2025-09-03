@@ -61,6 +61,12 @@ public class StreamExample {
                 .findFirst()
                 .ifPresent(p -> System.out.println("prima persona italiana: " + p));
 
+        // Es: calcolare il totale delle età delle persone
+        int totaleEta = persone.stream()
+                .map(p -> p.getEra())
+                .reduce(0, (sommaParziale, eta) -> sommaParziale + eta);
+        System.out.println("Somma delle età: " + totaleEta);
+
         // Es: calcola la media della eta
         int media = (Collections.max(persone).getEra() + Collections.min(persone).getEra()) / 2;
         System.out.println(media);
@@ -105,6 +111,8 @@ class Persona implements Comparable{ //POJO = Plain Old Java Object
 
     @Override
     public int compareTo(Object o) {
-        return 0;
+        Persona p = (Persona) o;
+        if (this.era > p.getEra()) return 1;
+        else if (this.era < p.getEra()) return -1; return 0;
     }
 }
